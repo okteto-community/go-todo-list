@@ -1,0 +1,22 @@
+build:
+  app:
+    context: .
+
+deploy:
+  compose: docker-compose.yml
+
+dev:
+  app:
+    image: okteto/golang:1
+    command: bash
+    workdir: /workspace
+    sync:
+      - .:/workspace
+    forward:
+      - 8080:8080
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=password
+      - DB_NAME=todoapp
