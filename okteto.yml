@@ -1,0 +1,24 @@
+build:
+  todo-app:
+    context: .
+
+deploy:
+  compose: docker-compose.yml
+
+dev:
+  todo-app:
+    image: ${OKTETO_BUILD_TODO_APP_IMAGE}
+    command: bash
+    workdir: /app
+    sync:
+      - .:/app
+    forward:
+      - 8080:8080
+    volumes:
+      - /go/pkg/mod
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=password
+      - DB_NAME=todoapp
